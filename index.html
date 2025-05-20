@@ -3,157 +3,218 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz - Teorias da Administração</title>
+  <title>Quiz Avançado - Teorias da Administração</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
+      background-color: #f0f2f5;
       padding: 20px;
     }
     .quiz-container {
-      max-width: 700px;
+      max-width: 800px;
       margin: auto;
-      background-color: white;
-      padding: 20px;
+      background-color: #fff;
+      padding: 25px 30px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #222;
     }
     .question {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
     }
     .question h3 {
       margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 1.1em;
+      color: #333;
     }
     label {
+      display: block;
+      margin-bottom: 6px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.95em;
+      color: #555;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
       cursor: pointer;
     }
     button {
-      padding: 10px 15px;
       background-color: #007bff;
       color: white;
       border: none;
       border-radius: 4px;
+      padding: 12px 20px;
+      font-size: 1em;
       cursor: pointer;
-      margin-right: 10px;
+      margin-right: 12px;
+      transition: background-color 0.3s ease;
     }
     button:hover {
       background-color: #0056b3;
     }
     .result {
-      margin-top: 20px;
-      font-weight: bold;
+      margin-top: 30px;
+      font-weight: 700;
+      font-size: 1.2em;
+      color: #222;
     }
     .wrong {
-      color: red;
-      font-weight: normal;
-      margin-left: 10px;
+      color: #c0392b;
+      font-weight: 600;
+      margin-top: 6px;
+      font-size: 0.95em;
     }
   </style>
 </head>
 <body>
   <div class="quiz-container">
-    <h2>Quiz - Teorias da Administração</h2>
+    <h2>Quiz Avançado - Teorias da Administração</h2>
     <div id="questions"></div>
-    <button onclick="checkAnswers()">Verificar Respostas</button>
-    <button onclick="clearAnswers()">Limpar Respostas</button>
+    <div style="text-align:center; margin-top: 25px;">
+      <button onclick="checkAnswers()">Verificar Respostas</button>
+      <button onclick="resetQuiz()">Limpar Respostas</button>
+    </div>
     <div class="result" id="result"></div>
   </div>
 
   <script>
     const questions = [
-      { q: "Taylor se preocupava com a eficiência dos operários na produção.", options: ["Verdadeiro", "Falso"], correct: "Verdadeiro" },
-      { q: "A Teoria Neoclássica valoriza os meios e não os fins.", options: ["Verdadeiro", "Falso"], correct: "Falso" },
-      { q: "A burocracia, segundo Weber, preza pela impessoalidade.", options: ["Verdadeiro", "Falso"], correct: "Verdadeiro" },
-      { q: "A Experiência de Hawthorne teve relação com:", options: ["Medição de produtividade com foco tecnológico", "Grupos informais e comportamento social", "Divisão do trabalho técnico"], correct: "Grupos informais e comportamento social" },
-      { q: "A APO foi criada por:", options: ["Fayol", "Weber", "Peter Drucker"], correct: "Peter Drucker" },
-      { q: "Quais são as funções administrativas segundo Fayol?", options: ["Planejar, Contratar, Supervisionar", "Planejar, Organizar, Comandar, Coordenar, Controlar", "Planejar, Recrutar, Delegar"], correct: "Planejar, Organizar, Comandar, Coordenar, Controlar" },
-      { q: "Qual teoria destaca o 'homo social' ao invés do 'homo economicus'?", options: ["Teoria Científica", "Teoria das Relações Humanas", "Teoria Neoclássica"], correct: "Teoria das Relações Humanas" },
-      { q: "Qual teoria afirma que 'não há uma única melhor maneira de organizar'?", options: ["Teoria da Contingência", "Teoria Clássica", "Teoria Comportamental"], correct: "Teoria da Contingência" },
-      { q: "Qual é a principal característica da Teoria Clássica?", options: ["Ênfase nas tarefas", "Ênfase nas pessoas", "Ênfase na motivação"], correct: "Ênfase nas tarefas" },
-      { q: "Quem criou a Teoria da Burocracia?", options: ["Fayol", "Taylor", "Max Weber"], correct: "Max Weber" },
-      { q: "A teoria que considera a empresa como um sistema aberto é:", options: ["Teoria Clássica", "Teoria Estruturalista", "Teoria Científica"], correct: "Teoria Estruturalista" },
-      { q: "Segundo Fayol, controlar significa:", options: ["Executar ordens", "Verificar se tudo ocorre conforme o planejado", "Motivar a equipe"], correct: "Verificar se tudo ocorre conforme o planejado" },
-      { q: "A principal crítica à Teoria das Relações Humanas é:", options: ["Foco exclusivo na estrutura", "Abordagem demagógica", "Ênfase excessiva na tecnologia"], correct: "Abordagem demagógica" },
-      { q: "A linha de montagem é associada a:", options: ["Fordismo", "Toyotismo", "Burocracia"], correct: "Fordismo" },
-      { q: "Qual a ênfase da Teoria Comportamental?", options: ["Estrutura", "Tecnologia", "Motivação e comportamento"], correct: "Motivação e comportamento" },
-      { q: "A Teoria X de McGregor considera que as pessoas são:", options: ["Autônomas e responsáveis", "Preguiçosas e evitam responsabilidade", "Motivadas por desafios"], correct: "Preguiçosas e evitam responsabilidade" },
-      { q: "O que significa 'organizar', segundo Fayol?", options: ["Comandar os colaboradores", "Definir estrutura material e social da empresa", "Controlar processos"], correct: "Definir estrutura material e social da empresa" },
-      { q: "Quem foi o autor do conceito de 'homem econômico'?", options: ["Max Weber", "Abraham Maslow", "Frederick Taylor"], correct: "Frederick Taylor" },
-      { q: "Qual teoria se concentra na relação entre líderes e subordinados?", options: ["Teoria das Relações Humanas", "Teoria Comportamental", "Teoria X e Y"], correct: "Teoria das Relações Humanas" },
-      { q: "A Teoria X acredita que os funcionários precisam ser:", options: ["Motivados por desafios", "Supervisionados de perto", "Autônomos"], correct: "Supervisionados de perto" },
-      { q: "A Teoria Y afirma que os funcionários:", options: ["São intrinsecamente motivados", "Precisam ser controlados", "Evitarão responsabilidade"], correct: "São intrinsecamente motivados" },
-      { q: "O que é a 'administração por objetivos' (APO)?", options: ["Foco em tarefas diárias", "Planejamento estratégico de longo prazo", "Definição de metas com participação de todos"], correct: "Definição de metas com participação de todos" },
-      { q: "A teoria que vê a organização como um sistema aberto, que interage com o ambiente, é:", options: ["Teoria Contingencial", "Teoria Burocrática", "Teoria Estruturalista"], correct: "Teoria Contingencial" },
-      { q: "A principal contribuição de Henri Fayol para a administração foi:", options: ["Teoria da motivação", "Princípios administrativos", "Modelo de liderança"], correct: "Princípios administrativos" },
-      { q: "O que é a abordagem humanista na administração?", options: ["Foco em processos e estrutura", "Foco no comportamento e motivação dos funcionários", "Foco em regras e disciplina"], correct: "Foco no comportamento e motivação dos funcionários" },
-      { q: "A Teoria das Relações Humanas surgiu como uma reação à:", options: ["Teoria Clássica", "Teoria Comportamental", "Teoria Neoclássica"], correct: "Teoria Clássica" },
-      { q: "A principal característica do modelo de gestão toyotista é:", options: ["Foco em produção em massa", "Melhoria contínua e redução de desperdícios", "Hierarquia rígida"], correct: "Melhoria contínua e redução de desperdícios" },
-      { q: "A administração científica é mais associada com o aumento da:", options: ["Motivação dos trabalhadores", "Eficiência no trabalho", "Gestão participativa"], correct: "Eficiência no trabalho" },
-      { q: "Max Weber defendia a:", options: ["Administração centralizada", "Administração descentralizada", "Administração impessoal e hierárquica"], correct: "Administração impessoal e hierárquica" },
-      { q: "O que é a abordagem estruturalista na administração?", options: ["Foco no comportamento humano", "Análise da estrutura organizacional e seus processos", "Gestão por metas"], correct: "Análise da estrutura organizacional e seus processos" },
-      { q: "O que define a teoria de sistemas na administração?", options: ["Foco em sistemas fechados", "A organização como um sistema interativo com o ambiente", "A ênfase nas tarefas administrativas"], correct: "A organização como um sistema interativo com o ambiente" }
+      // Perguntas Originais
+      { q: "Quem é considerado o pai da Administração Científica?", options: ["Henri Fayol", "Frederick Taylor", "Max Weber", "Peter Drucker"], correct: "Frederick Taylor" },
+      { q: "Qual é o principal foco da Teoria da Contingência?", options: ["Padronização de processos", "Adaptação ao ambiente", "Hierarquia rígida", "Motivação intrínseca"], correct: "Adaptação ao ambiente" },
+      { q: "Segundo Max Weber, qual característica NÃO é típica da burocracia?", options: ["Hierarquia clara", "Regras escritas", "Flexibilidade de funções", "Impersonalidade"], correct: "Flexibilidade de funções" },
+      { q: "Qual autor desenvolveu a Teoria X e Teoria Y sobre comportamento humano?", options: ["Douglas McGregor", "Elton Mayo", "Abraham Maslow", "Chris Argyris"], correct: "Douglas McGregor" },
+      { q: "Na Teoria de Sistemas, a organização é vista como:", options: ["Sistema fechado", "Sistema aberto", "Estrutura hierárquica", "Reunião de tarefas isoladas"], correct: "Sistema aberto" },
+      { q: "Qual é a ênfase principal da Teoria Clássica da Administração?", options: ["Relações humanas", "Eficiência e divisão do trabalho", "Ambiente externo", "Motivação pessoal"], correct: "Eficiência e divisão do trabalho" },
+      { q: "Qual conceito Henri Fayol não incluiu em suas funções administrativas?", options: ["Planejar", "Controlar", "Innovar", "Organizar"], correct: "Innovar" },
+      { q: "Qual das alternativas melhor representa o conceito de 'liderança situacional'?", options: ["Líder autocrático sempre", "Líder que adapta estilo conforme a situação", "Líder que não delega tarefas", "Líder burocrático"], correct: "Líder que adapta estilo conforme a situação" },
+      { q: "Quem desenvolveu a Hierarquia das Necessidades?", options: ["Douglas McGregor", "Abraham Maslow", "Frederick Taylor", "Max Weber"], correct: "Abraham Maslow" },
+      { q: "O que é a Teoria da Burocracia segundo Max Weber?", options: ["Gestão por exceção", "Administração baseada em regras e hierarquia", "Teoria motivacional", "Teoria de sistemas"], correct: "Administração baseada em regras e hierarquia" },
+      { q: "Qual é a crítica principal à Teoria das Relações Humanas?", options: ["Ignorar aspectos técnicos", "Focar só em processos", "Ênfase excessiva na tecnologia", "Ignorar a motivação"], correct: "Ignorar aspectos técnicos" },
+      { q: "O que significa o princípio da 'especialização' na Administração Científica?", options: ["Multitarefas para todos", "Fazer poucas tarefas para ganhar eficiência", "Trabalho em equipe multidisciplinar", "Autonomia total dos operários"], correct: "Fazer poucas tarefas para ganhar eficiência" },
+      { q: "Qual autor enfatizou o conceito de 'autoridade legítima'?", options: ["Max Weber", "Henri Fayol", "Frederick Taylor", "Douglas McGregor"], correct: "Max Weber" },
+      { q: "O que é o Fordismo?", options: ["Gestão flexível", "Produção em massa com linha de montagem", "Teoria motivacional", "Administração descentralizada"], correct: "Produção em massa com linha de montagem" },
+      { q: "Segundo Chris Argyris, qual é a característica do 'adulto maduro' no trabalho?", options: ["Passividade", "Autonomia e responsabilidade", "Dependência do supervisor", "Resistência à mudança"], correct: "Autonomia e responsabilidade" },
+      { q: "O que define a Administração por Objetivos (APO)?", options: ["Metas definidas centralmente", "Envolvimento do subordinado na definição de metas", "Controle rígido de tarefas", "Foco só na produção"], correct: "Envolvimento do subordinado na definição de metas" },
+      { q: "Qual é a função principal da 'coordenação' na administração clássica?", options: ["Delegar tarefas", "Garantir que atividades estejam harmonizadas", "Supervisionar operários", "Planejar estratégias"], correct: "Garantir que atividades estejam harmonizadas" },
+      { q: "Qual é a crítica à abordagem burocrática nas organizações modernas?", options: ["Falta de regras claras", "Excesso de rigidez e lentidão", "Foco em pessoas e não em processos", "Pouca formalidade"], correct: "Excesso de rigidez e lentidão" },
+      { q: "Qual das alternativas define melhor o conceito de 'empowerment'?", options: ["Centralização do poder", "Dar autonomia e responsabilidade aos funcionários", "Controle rigoroso", "Reforço hierárquico"], correct: "Dar autonomia e responsabilidade aos funcionários" },
+      { q: "O que caracteriza a Teoria Comportamental?", options: ["Foco em regras e processos", "Ênfase em aspectos humanos e motivacionais", "Foco exclusivo em eficiência técnica", "Negligência das pessoas"], correct: "Ênfase em aspectos humanos e motivacionais" },
+      { q: "Quem desenvolveu a Teoria da Administração Científica?", options: ["Frederick Taylor", "Henri Fayol", "Max Weber", "Elton Mayo"], correct: "Frederick Taylor" },
+      { q: "Qual é o foco da Teoria Neoclássica da Administração?", options: ["Apenas estrutura organizacional", "Integração de teoria clássica e relações humanas", "Só motivação", "Só tecnologia"], correct: "Integração de teoria clássica e relações humanas" },
+      { q: "Qual é o papel da comunicação na Teoria das Relações Humanas?", options: ["É secundário", "Fundamental para motivação e produtividade", "Só para informar ordens", "Não é considerada"], correct: "Fundamental para motivação e produtividade" },
+      { q: "Qual teoria afirma que não existe uma única forma ideal de organizar?", options: ["Teoria Clássica", "Teoria da Contingência", "Teoria Científica", "Teoria da Burocracia"], correct: "Teoria da Contingência" },
+      { q: "Qual é a característica da administração japonesa conhecida como 'Just in Time'?", options: ["Produção em massa sem estoque", "Produção com estoque elevado", "Foco na hierarquia rígida", "Ênfase no controle rígido"], correct: "Produção em massa sem estoque" },
+      { q: "Quem é Peter Drucker no contexto da administração?", options: ["Pai da Administração Científica", "Criador da APO e guru da administração moderna", "Fundador da Teoria das Relações Humanas", "Principal teórico da burocracia"], correct: "Criador da APO e guru da administração moderna" },
+      { q: "Qual conceito é central na Teoria do Desenvolvimento Organizacional?", options: ["Mudança planejada e desenvolvimento humano", "Foco apenas em tecnologia", "Hierarquia rígida", "Controle por regras"], correct: "Mudança planejada e desenvolvimento humano" },
+      { q: "O que representa o conceito de 'estrutura matricial' nas organizações?", options: ["Hierarquia única", "Combinação de estrutura funcional e por projetos", "Gestão por processos", "Nenhuma dessas"], correct: "Combinação de estrutura funcional e por projetos" },
+      { q: "Qual é o conceito de 'liderança transformacional'?", options: ["Controle rígido e ordens", "Inspirar e motivar mudanças", "Focar só em processos", "Evitar mudanças"], correct: "Inspirar e motivar mudanças" },
+      { q: "O que é benchmarking em gestão?", options: ["Comparação com melhores práticas externas", "Controle interno de qualidade", "Planejamento estratégico", "Gestão de estoque"], correct: "Comparação com melhores práticas externas" },
+      { q: "Qual o principal foco da Administração Científica de Taylor?", options: ["Motivação", "Estudo e padronização do trabalho", "Relações humanas", "Comunicação"], correct: "Estudo e padronização do trabalho" },
+      { q: "Qual teoria administrativa introduziu a ideia de que o trabalhador é um 'homo social'?", options: ["Administração Científica", "Teoria Clássica", "Teoria das Relações Humanas", "Teoria da Burocracia"], correct: "Teoria das Relações Humanas" },
+      { q: "Segundo Fayol, qual função administrativa envolve prever o futuro e traçar um programa de ação?", options: ["Organizar", "Comandar", "Controlar", "Planejar"], correct: "Planejar" },
+      { q: "A Teoria da Contingência defende que a estrutura organizacional ideal depende de fatores como:", options: ["Apenas o tamanho da empresa", "Apenas a cultura organizacional", "O ambiente e a tecnologia", "Apenas a hierarquia de cargos"], correct: "O ambiente e a tecnologia" },
+      { q: "Qual das seguintes teorias enfatiza a importância dos grupos informais nas organizações?", options: ["Teoria Clássica", "Teoria da Burocracia", "Teoria das Relações Humanas", "Teoria dos Sistemas"], correct: "Teoria das Relações Humanas" },
+      { q: "Na Hierarquia das Necessidades de Maslow, qual necessidade vem antes da necessidade de segurança?", options: ["Auto-realização", "Estima", "Sociais", "Fisiológicas"], correct: "Fisiológicas" },
+      { q: "A Escola de Relações Humanas surgiu principalmente como uma reação a qual teoria?", options: ["Teoria Clássica", "Teoria da Burocracia", "Teoria dos Sistemas", "Teoria da Contingência"], correct: "Teoria Clássica" },
+      { q: "Qual princípio da Administração Científica de Taylor propõe que a gerência deve assumir o planejamento e a supervisão?", options: ["Desenvolvimento de uma ciência para cada elemento do trabalho", "Seleção científica e treinamento dos trabalhadores", "Cooperação entre gerência e trabalhadores", "Divisão de trabalho e responsabilidade"], correct: "Divisão de trabalho e responsabilidade" },
+      { q: "A Teoria de Sistemas enxerga a organização como um conjunto de partes interligadas que interagem com o:", options: ["Mercado financeiro", "Ambiente externo", "Conselho de administração", "Sindicato dos trabalhadores"], correct: "Ambiente externo" },
+      { q: "O que é o conceito de 'delegação' na administração?", options: ["Concentrar todas as decisões na cúpula", "Passar autoridade e responsabilidade para níveis inferiores", "Eliminar a hierarquia", "Restringir a autonomia dos subordinados"], correct: "Passar autoridade e responsabilidade para níveis inferiores" },
+      { q: "Qual teoria da administração introduziu a ideia de que a produtividade pode ser afetada por fatores psicológicos e sociais?", options: ["Administração Científica", "Teoria Clássica", "Teoria das Relações Humanas", "Teoria da Burocracia"], correct: "Teoria das Relações Humanas" },
+      { q: "A Teoria Neoclássica da Administração busca um equilíbrio entre a ênfase na estrutura e a ênfase nas:", options: ["Tecnologias", "Ferramentas de produção", "Pessoas", "Finanças"], correct: "Pessoas" },
+      { q: "Para Weber, a burocracia é um tipo de dominação legal-racional baseada em:", options: ["Tradição e costumes", "Carisma e inspiração", "Regras e leis", "Poder e autoridade"], correct: "Regras e leis" },
+      { q: "Qual das seguintes não é uma das 14 princípios de Fayol?", options: ["Disciplina", "Inovação contínua", "Unidade de comando", "Espírito de equipe"], correct: "Inovação contínua" },
+      { q: "O movimento de 'qualidade total' (TQM) tem suas raízes em qual teoria ou abordagem administrativa?", options: ["Teoria da Burocracia", "Administração Científica", "Abordagem Japonesa da Administração", "Teoria X e Y"], correct: "Abordagem Japonesa da Administração" },
+      { q: "A Teoria do Desenvolvimento Organizacional (DO) foca na mudança planejada e no aprimoramento da eficácia organizacional através da intervenção em:", options: ["Estruturas e tecnologias", "Apenas resultados financeiros", "Apenas processos de produção", "Comportamento e processos humanos"], correct: "Comportamento e processos humanos" },
+      { q: "O conceito de 'zona de indiferença', onde os subordinados aceitam a autoridade sem questionar, está associado a qual autor?", options: ["Frederick Taylor", "Chester Barnard", "Henri Fayol", "Max Weber"], correct: "Chester Barnard" },
+      { q: "A Teoria Comportamental da Administração considera o homem como um 'homo complexus', o que significa que ele é:", options: ["Totalmente previsível", "Irracional em suas decisões", "Motivado por fatores diversos e mutáveis", "Apenas motivado por dinheiro"], correct: "Motivado por fatores diversos e mutáveis" },
+      { q: "Qual abordagem administrativa enfatiza a necessidade de as organizações serem flexíveis e adaptáveis às mudanças do ambiente?", options: ["Teoria Clássica", "Teoria da Burocracia", "Teoria da Contingência", "Administração Científica"], correct: "Teoria da Contingência" },
+      { q: "O conceito de 'ciclo PDCA' (Plan-Do-Check-Act), amplamente utilizado na gestão da qualidade, está associado a:", options: ["Henri Fayol", "Frederick Taylor", "W. Edwards Deming", "Peter Drucker"], correct: "W. Edwards Deming" },
+
+      // Mais 19 perguntas adicionadas
+      { q: "Qual foi o principal experimento que deu origem à Teoria das Relações Humanas?", options: ["Estudos de Tempos e Movimentos", "Experiência de Hawthorne", "Estudo da Burocracia", "Experimento da Teoria X e Y"], correct: "Experiência de Hawthorne" },
+      { q: "A Escola de Sistemas abrange a organização como um sistema que interage com o ambiente, sendo caracterizada por:", options: ["Fechamento e isolamento", "Interdependência e sinergia", "Rigidez e formalidade", "Centralização e controle"], correct: "Interdependência e sinergia" },
+      { q: "Qual dos seguintes autores é conhecido por suas contribuições para a Teoria da Contingência?", options: ["Frederick Taylor", "Henri Fayol", "Joan Woodward", "Abraham Maslow"], correct: "Joan Woodward" },
+      { q: "O que significa 'entropia' no contexto da Teoria de Sistemas?", options: ["Aumento da ordem e organização", "Tendência ao caos e desorganização", "Estabilidade e equilíbrio", "Crescimento contínuo"], correct: "Tendência ao caos e desorganização" },
+      { q: "A Teoria Z, de William Ouchi, é uma abordagem que combina elementos da administração:", options: ["Americana e japonesa", "Europeia e americana", "Asiática e europeia", "Latino-americana e asiática"], correct: "Americana e japonesa" },
+      { q: "Qual é o principal objetivo da reengenharia de processos?", options: ["Aumentar a burocracia", "Reduzir custos e aumentar a eficiência através da redesenho radical de processos", "Manter os processos existentes", "Focar apenas na satisfação do cliente"], correct: "Reduzir custos e aumentar a eficiência através da redesenho radical de processos" },
+      { q: "A Teoria da Excelência, popularizada por Tom Peters e Robert Waterman, enfatiza quais características de empresas de sucesso?", options: ["Burocracia e centralização", "Flexibilidade e inovação", "Rigidez e controle", "Hierarquia e formalidade"], correct: "Flexibilidade e inovação" },
+      { q: "Qual conceito está relacionado à ideia de que a autoridade flui de cima para baixo na hierarquia organizacional?", options: ["Delegação", "Centralização", "Cadeia de comando", "Empowerment"], correct: "Cadeia de comando" },
+      { q: "A Teoria da Qualidade Total (TQM) tem como um de seus pilares a:", options: ["Inspeção final do produto", "Prevenção de defeitos", "Produção em massa", "Redução de custos a qualquer preço"], correct: "Prevenção de defeitos" },
+      { q: "Qual autor é associado à Teoria dos Dois Fatores (Higiênicos e Motivacionais)?", options: ["Abraham Maslow", "Frederick Herzberg", "Douglas McGregor", "Victor Vroom"], correct: "Frederick Herzberg" },
+      { q: "A Teoria da Decisão, com Herbert Simon, foca na:", options: ["Irracionalidade dos gestores", "Processo de tomada de decisão nas organizações", "Importância da intuição", "Exclusividade da lógica"], correct: "Processo de tomada de decisão nas organizações" },
+      { q: "O que é 'downsizing' no contexto da administração?", options: ["Aumento da força de trabalho", "Redução do tamanho da organização e do quadro de funcionários", "Expansão de mercados", "Criação de novas unidades de negócio"], correct: "Redução do tamanho da organização e do quadro de funcionários" },
+      { q: "A Teoria da Dependência de Recursos sugere que as organizações buscam:", options: ["Isolamento do ambiente", "Autossuficiência total", "Reduzir a dependência de recursos externos", "Aumentar a dependência de um único fornecedor"], correct: "Reduzir a dependência de recursos externos" },
+      { q: "Qual é o principal foco da Teoria da Agência?", options: ["Relações entre acionistas e gerentes", "Conflitos entre departamentos", "Sinergia de equipes", "Hierarquia de poder"], correct: "Relações entre acionistas e gerentes" },
+      { q: "A Teoria da Aprendizagem Organizacional enfatiza que as organizações devem:", options: ["Repetir os mesmos erros", "Aprender com a experiência e se adaptar", "Ignorar o feedback", "Manter-se estáticas"], correct: "Aprender com a experiência e se adaptar" },
+      { q: "O conceito de 'organização orgânica', em contraste com a 'organização mecânica', é característico de qual teoria?", options: ["Teoria Clássica", "Teoria da Burocracia", "Teoria da Contingência", "Administração Científica"], correct: "Teoria da Contingência" },
+      { q: "Qual é o objetivo do 'Balanced Scorecard'?", options: ["Medir apenas o desempenho financeiro", "Fornecer uma visão equilibrada do desempenho organizacional", "Focar apenas em metas de produção", "Ignorar a perspectiva do cliente"], correct: "Fornecer uma visão equilibrada do desempenho organizacional" },
+      { q: "A Teoria do Caos na administração sugere que:", options: ["Sistemas complexos são sempre previsíveis", "Pequenas mudanças podem ter grandes impactos imprevisíveis", "A ordem é sempre mantida", "A aleatoriedade não existe"], correct: "Pequenas mudanças podem ter grandes impactos imprevisíveis" },
+      { q: "Qual das seguintes é uma característica da gestão por competências?", options: ["Foco apenas em tarefas", "Desenvolvimento de habilidades e conhecimentos dos colaboradores", "Ignorar o potencial individual", "Avaliação baseada apenas em tempo de serviço"], correct: "Desenvolvimento de habilidades e conhecimentos dos colaboradores" }
     ];
 
     const questionsContainer = document.getElementById("questions");
+    
+    // Renderiza as perguntas no HTML
     questions.forEach((item, index) => {
       const div = document.createElement("div");
       div.className = "question";
       div.innerHTML = `<h3>${index + 1}. ${item.q}</h3>` +
         item.options.map(opt => `
           <label>
-            <input type="radio" name="q${index + 1}" value="${opt}" /> ${opt}
-          </label><br />
+            <input type="radio" name="q${index + 1}" value="${opt}" />
+            ${opt}
+          </label>
         `).join("");
       questionsContainer.appendChild(div);
     });
 
+    // Função para verificar as respostas
     function checkAnswers() {
       let score = 0;
-      const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = "";
+      let resultText = "";
       questions.forEach((item, index) => {
         const selected = document.querySelector(`input[name="q${index + 1}"]:checked`);
         const questionDiv = questionsContainer.children[index];
-        // Remove previous wrong markers
-        const oldWrong = questionDiv.querySelector(".wrong");
-        if (oldWrong) oldWrong.remove();
+        // Limpar mensagens anteriores de "resposta correta"
+        const prevWrongMsg = questionDiv.querySelector(".wrong");
+        if(prevWrongMsg) prevWrongMsg.remove();
 
-        if (selected) {
-          if (selected.value === item.correct) {
-            score++;
-          } else {
-            // Mark wrong question
-            const wrongSpan = document.createElement("span");
-            wrongSpan.className = "wrong";
-            wrongSpan.textContent = `(Errado! Resposta correta: ${item.correct})`;
-            questionDiv.querySelector("h3").appendChild(wrongSpan);
-          }
+        if (selected && selected.value === item.correct) {
+          score++;
         } else {
-          // No answer selected is also treated as wrong
-          const wrongSpan = document.createElement("span");
-          wrongSpan.className = "wrong";
-          wrongSpan.textContent = `(Nenhuma resposta selecionada! Resposta correta: ${item.correct})`;
-          questionDiv.querySelector("h3").appendChild(wrongSpan);
+          // Adiciona mensagem de resposta correta se a resposta estiver errada ou não selecionada
+          const wrongMsg = document.createElement("div");
+          wrongMsg.className = "wrong";
+          wrongMsg.textContent = `Resposta correta: ${item.correct}`;
+          questionDiv.appendChild(wrongMsg);
         }
       });
-      resultDiv.textContent = `Você acertou ${score} de ${questions.length} questões.`;
-      window.scrollTo(0, document.body.scrollHeight);
+      // Exibe o resultado final
+      document.getElementById("result").textContent = `Você acertou ${score} de ${questions.length} questões.`;
+      // Rola a página até o resultado para o usuário visualizar
+      document.getElementById("result").scrollIntoView({behavior: "smooth"});
     }
 
-    function clearAnswers() {
+    // Função para limpar as respostas selecionadas e o resultado
+    function resetQuiz() {
       questions.forEach((_, index) => {
         const selected = document.querySelector(`input[name="q${index + 1}"]:checked`);
-        if (selected) selected.checked = false;
-        // Remove wrong markers
+        if(selected) selected.checked = false; // Desmarca a opção selecionada
         const questionDiv = questionsContainer.children[index];
-        const oldWrong = questionDiv.querySelector(".wrong");
-        if (oldWrong) oldWrong.remove();
+        const prevWrongMsg = questionDiv.querySelector(".wrong");
+        if(prevWrongMsg) prevWrongMsg.remove(); // Remove a mensagem de resposta correta
       });
-      document.getElementById("result").textContent = "";
+      document.getElementById("result").textContent = ""; // Limpa o texto do resultado
     }
   </script>
 </body>
 </html>
-
-<a href="quiz-avancado.html">Ir para o Quiz Avançado</a>
-
